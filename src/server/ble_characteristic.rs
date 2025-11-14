@@ -42,8 +42,13 @@ cfg_if::cfg_if! {
 
 const NULL_HANDLE: u16 = 0xFFFF;
 
+// effectively adding 5.3.4 which breaks on this type, unsure on lower patch versions
 cfg_if::cfg_if! {
   if #[cfg(any(
+    all(
+      esp_idf_version_major = "5",
+      esp_idf_version_minor = "3",
+      not(any(esp_idf_version_patch = "0", esp_idf_version_patch = "1"))),
     all(
       esp_idf_version_major = "5",
       esp_idf_version_minor = "4",
