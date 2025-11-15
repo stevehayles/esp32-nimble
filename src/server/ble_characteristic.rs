@@ -43,6 +43,7 @@ cfg_if::cfg_if! {
 const NULL_HANDLE: u16 = 0xFFFF;
 
 // effectively adding 5.3.4 which breaks on this type, unsure on lower patch versions
+// after upgrading to 5.5  it appears to have reverted back to a u16
 cfg_if::cfg_if! {
   if #[cfg(any(
     all(
@@ -52,11 +53,7 @@ cfg_if::cfg_if! {
     all(
       esp_idf_version_major = "5",
       esp_idf_version_minor = "4",
-      not(any(esp_idf_version_patch = "0", esp_idf_version_patch = "1"))),
-    all(
-      esp_idf_version_major = "5",
-      esp_idf_version_minor = "5",
-    )
+      not(any(esp_idf_version_patch = "0", esp_idf_version_patch = "1")))
   ))] {
     type NimblePropertiesType = u32;
   } else {
